@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_26_174400) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_26_180446) do
   create_table "answers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "fee_pounds"
@@ -20,6 +20,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_174400) do
     t.datetime "updated_at", null: false
     t.index ["lawyer_id"], name: "index_answers_on_lawyer_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "answer_id", null: false
+    t.datetime "approved_at"
+    t.datetime "created_at", null: false
+    t.integer "requester_id", null: false
+    t.integer "status"
+    t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_payments_on_answer_id"
+    t.index ["requester_id"], name: "index_payments_on_requester_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -45,7 +56,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_174400) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
-  add_foreign_key "answers", "users", column: "lawyer_id"
   add_foreign_key "answers", "questions"
+  add_foreign_key "answers", "users", column: "lawyer_id"
+  add_foreign_key "payments", "answers"
+  add_foreign_key "payments", "users", column: "requester_id"
   add_foreign_key "questions", "users"
 end

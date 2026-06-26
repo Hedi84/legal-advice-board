@@ -8,6 +8,8 @@ class User < ApplicationRecord
   }
 
   has_many :questions, dependent: :destroy
+  has_many :answers, foreign_key: :lawyer_id, dependent: :destroy
+  has_many :payments, foreign_key: :requester_id, dependent: :destroy
 
   normalizes :email_address, with: ->(email_address) { email_address.strip.downcase }
 
