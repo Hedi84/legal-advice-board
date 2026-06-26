@@ -14,6 +14,6 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user!
-    redirect_to login_path, alert: "Please log in first." unless logged_in?
+    redirect_to login_path, alert: "The email or password is incorrect, please try again." unless logged_in?
   end
 end
