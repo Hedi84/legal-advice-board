@@ -75,3 +75,5 @@ gem "factory_bot_rails", "~> 6.5", :groups => [:development, :test]
 gem "faker", "~> 3.8", :groups => [:development, :test]
 
 gem "shoulda-matchers", "~> 8.0", :group => :test
+
+gem "bcrypt", "~> 3.1"
