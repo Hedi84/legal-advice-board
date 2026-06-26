@@ -9,6 +9,51 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
+/* ── Reset & Base ────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #1e293b;
+  background: #f8fafc;
+}
+
+/* ── Layout ──────────────────────────────────────── */
+
+.container {
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 0 1.25rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.back-link:hover { color: #1e293b; }
+
+/* ── Navbar ──────────────────────────────────────── */
+
 .navbar {
   display: flex;
   align-items: center;
@@ -26,25 +71,46 @@
 
 .navbar button {
   background: none;
-  border: 1px solid white;
+  border: 1px solid rgba(255,255,255,0.5);
   color: white;
   padding: 0.3rem 0.75rem;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
-.navbar button:hover {
-  background: rgba(255, 255, 255, 0.1);
+.navbar button:hover { background: rgba(255,255,255,0.1); }
+
+/* ── Buttons ─────────────────────────────────────── */
+
+.btn {
+  display: inline-block;
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
 }
+
+.btn:hover { opacity: 0.85; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn--primary   { background: #2563eb; color: white; }
+.btn--secondary { background: #e2e8f0; color: #1e293b; }
+.btn--danger    { background: #ef4444; color: white; }
+
+/* ── Flash ───────────────────────────────────────── */
 
 .flash {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
-  border-radius: 4px;
+  margin: 0.75rem 1.25rem;
+  border-radius: 6px;
   font-size: 0.9rem;
 }
 
@@ -62,3 +128,168 @@
 }
 
 .flash button:hover { opacity: 1; }
+
+/* ── Status Badge ────────────────────────────────── */
+
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.status-badge--open     { background: #dcfce7; color: #166534; }
+.status-badge--answered { background: #ffedd5; color: #9a3412; }
+.status-badge--closed   { background: #fee2e2; color: #991b1b; }
+
+/* ── Question Card ───────────────────────────────── */
+
+.question-card {
+  background: white;
+  border-radius: 10px;
+  border-left: 4px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.question-card--open     { border-left-color: #22c55e; }
+.question-card--answered { border-left-color: #f97316; }
+.question-card--closed   { border-left-color: #ef4444; }
+
+.question-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.question-card__category {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.question-card__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.question-card__title a {
+  color: #1e293b;
+  text-decoration: none;
+}
+
+.question-card__title a:hover { color: #2563eb; }
+
+.question-card__body {
+  margin: 0 0 1rem;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.question-card__footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.question-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* ── Answers Section ─────────────────────────────── */
+
+.answers-section {
+  margin-top: 2rem;
+}
+
+.answers-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.answers-section__header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #64748b;
+}
+
+/* ── Answer Card ─────────────────────────────────── */
+
+.answer-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.75rem;
+  margin-left: 1.5rem;
+}
+
+.answer-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.answer-card__lawyer {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1e293b;
+}
+
+.answer-card__paid {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #166534;
+  background: #dcfce7;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.answer-card__fee {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.answer-card__body {
+  color: #334155;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.answer-card__locked {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.answer-card__locked-text {
+  font-weight: 600;
+  color: #475569;
+  margin: 0 0 0.25rem;
+}
+
+.answer-card__locked-sub {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  margin: 0 0 0.75rem;
+}
+
+/* ── Empty State ─────────────────────────────────── */
+
+.empty-state {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 2rem 0;
+}

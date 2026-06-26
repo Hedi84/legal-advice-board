@@ -1,0 +1,30 @@
+<div class="answer-card" id="<%= dom_id(answer) %>">
+  <div class="answer-card__header">
+    <span class="answer-card__lawyer"><%= answer.lawyer.name %></span>
+    <% if answer.payment&.paid? %>
+      <span class="answer-card__paid">Paid ✓</span>
+    <% else %>
+      <span class="answer-card__fee">Proposed fee: £<%= answer.fee_pounds %></span>
+    <% end %>
+  </div>
+
+  <% if @permissions.view_answer_full?(answer) %>
+    <p class="answer-card__body"><%= answer.response %></p>
+  <% else %>
+    <div class="answer-card__locked">
+      <p class="answer-card__locked-text">This answer is locked.</p>
+      <p class="answer-card__locked-sub">Pay £<%= answer.fee_pounds %> to reveal the lawyer's advice.</p>
+
+      <% if @permissions.pay_for_answer?(answer) %>
+        <%= form_with url: payment_path(answer.payment),
+                      method: :patch,
+                      data: { controller: "payment", action: "submit->payment#pay" } do |form| %>
+          <%= form.button "Pay £#{answer.fee_pounds}",
+                          type: "submit",
+                          class: "btn btn--primary",
+                          data: { payment_target: "button" } %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

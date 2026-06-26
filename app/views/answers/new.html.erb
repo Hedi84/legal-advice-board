@@ -1,0 +1,38 @@
+<div class="container">
+  <%= link_to "← Back to question", question_path(@question), class: "back-link" %>
+
+  <div class="question-card question-card--<%= @question.status %>">
+    <div class="question-card__header">
+      <span class="question-card__category"><%= @question.category %></span>
+      <span class="status-badge status-badge--<%= @question.status %>"><%= @question.status.humanize %></span>
+    </div>
+    <h2 class="question-card__title"><%= @question.title %></h2>
+    <p class="question-card__body"><%= @question.body %></p>
+    <div class="question-card__footer">
+      <span>Asked by <%= @question.user.name %></span>
+      <span><%= time_ago_in_words(@question.created_at) %> ago</span>
+    </div>
+  </div>
+
+  <h1 style="font-size: 1.2rem; margin: 1.5rem 0 1rem;">Your Answer</h1>
+
+  <%= form_with model: [@question, @answer] do |form| %>
+    <% if @answer.errors.any? %>
+      <div class="flash flash--alert" style="margin-bottom: 1rem;">
+        <span><%= @answer.errors.full_messages.to_sentence %></span>
+      </div>
+    <% end %>
+
+    <div style="margin-bottom: 1rem;">
+      <%= form.label :response, "Response", style: "display: block; font-weight: 500; margin-bottom: 0.25rem;" %>
+      <%= form.text_area :response, rows: 8, style: "width: 100%; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.95rem;" %>
+    </div>
+
+    <div style="margin-bottom: 1.25rem;">
+      <%= form.label :fee_pounds, "Proposed fee (£)", style: "display: block; font-weight: 500; margin-bottom: 0.25rem;" %>
+      <%= form.number_field :fee_pounds, min: 1, style: "padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.95rem;" %>
+    </div>
+
+    <%= form.submit "Submit Answer", class: "btn btn--primary" %>
+  <% end %>
+</div>

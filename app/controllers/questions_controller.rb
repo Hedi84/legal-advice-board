@@ -1,15 +1,17 @@
 class QuestionsController < ApplicationController
   before_action :require_user!
   before_action :require_question_creator!, only: %i[new create]
-  before_action :set_question, only: :destroy
+  before_action :set_question, only: %i[show destroy close]
   before_action :require_question_deleter!, only: :destroy
+  before_action :require_question_closer!, only: :close
 
   def index
-    @questions = if @permissions.view_all_questions?
-                   Question.all
-    else
-                   current_user.questions
-    end.order(created_at: :desc)
+    base = @permissions.view_all_questions? ? Question.all : current_user.questions
+    @questions = base.order(status: :asc, created_at: :desc)
+  end
+
+  def show
+    @answers = @question.answers.includes(:lawyer, :payment).order(created_at: :asc)
   end
 
   def new
@@ -31,6 +33,11 @@ class QuestionsController < ApplicationController
     redirect_to questions_path, notice: "Question deleted."
   end
 
+  def close
+    @question.update!(status: :closed)
+    redirect_to question_path(@question), notice: "Question closed."
+  end
+
   private
 
   def set_question
@@ -47,6 +54,12 @@ class QuestionsController < ApplicationController
     return if @permissions.delete_question?(@question)
 
     redirect_to questions_path, alert: "You are not authorised to delete this question."
+  end
+
+  def require_question_closer!
+    return if @permissions.close_question?(@question)
+
+    redirect_to question_path(@question), alert: "You are not authorised to close this question."
   end
 
   def question_params

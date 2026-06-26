@@ -1,0 +1,55 @@
+<div class="container">
+  <%= link_to "← Back to questions", questions_path, class: "back-link" %>
+
+  <div class="question-card question-card--<%= @question.status %>">
+    <div class="question-card__header">
+      <div class="question-card__meta">
+        <span class="question-card__category"><%= @question.category %></span>
+        <span class="status-badge status-badge--<%= @question.status %>"><%= @question.status.humanize %></span>
+      </div>
+    </div>
+
+    <h1 class="question-card__title"><%= @question.title %></h1>
+    <p class="question-card__body"><%= @question.body %></p>
+
+    <div class="question-card__footer">
+      <span>Asked by <%= @question.user.name %></span>
+      <span><%= time_ago_in_words(@question.created_at) %> ago</span>
+    </div>
+
+    <div class="question-card__actions">
+      <% if @permissions.delete_question?(@question) %>
+        <%= button_to "Delete",
+                      question_path(@question),
+                      method: :delete,
+                      class: "btn btn--danger",
+                      form: { data: { turbo_confirm: "Delete this question?" } } %>
+      <% end %>
+
+      <% if @question.answered? && @permissions.close_question?(@question) %>
+        <%= button_to "Close question",
+                      close_question_path(@question),
+                      method: :patch,
+                      class: "btn btn--secondary",
+                      form: { data: { turbo_confirm: "Close this question?" } } %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="answers-section">
+    <div class="answers-section__header">
+      <h2><%= pluralize(@answers.count, "Answer") %></h2>
+      <% if @permissions.create_answers? %>
+        <%= link_to "Add Answer", new_question_answer_path(@question), class: "btn btn--primary" %>
+      <% end %>
+    </div>
+
+    <% if @answers.any? %>
+      <% @answers.each do |answer| %>
+        <%= render "answers/answer", answer: answer %>
+      <% end %>
+    <% else %>
+      <p class="empty-state">No answers yet.</p>
+    <% end %>
+  </div>
+</div>

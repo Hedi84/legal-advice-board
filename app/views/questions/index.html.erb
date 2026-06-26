@@ -1,34 +1,44 @@
-<h1>Questions</h1>
+<div class="container">
+  <div class="page-header">
+    <h1>Questions</h1>
+    <% if @permissions.create_questions? %>
+      <%= link_to "Ask a Question", new_question_path, class: "btn btn--primary" %>
+    <% end %>
+  </div>
 
-<% if @permissions.create_questions? %>
-  <%= link_to "Ask a question", new_question_path %>
-<% end %>
+  <% if @questions.any? %>
+    <% @questions.each do |question| %>
+      <div class="question-card question-card--<%= question.status %>">
+        <div class="question-card__header">
+          <div class="question-card__meta">
+            <span class="question-card__category"><%= question.category %></span>
+            <span class="status-badge status-badge--<%= question.status %>"><%= question.status.humanize %></span>
+          </div>
+        </div>
 
-<% if @questions.any? %>
-  <% @questions.each do |question| %>
-    <article>
-      <h2><%= question.title %></h2>
+        <h2 class="question-card__title">
+          <%= link_to question.title, question_path(question) %>
+        </h2>
 
-      <p>
-        <strong>Category:</strong>
-        <%= question.category %>
-      </p>
+        <p class="question-card__body"><%= truncate(question.body, length: 160) %></p>
 
-      <p>
-        <strong>Status:</strong>
-        <%= question.status.humanize %>
-      </p>
+        <div class="question-card__footer">
+          <span>Asked by <%= question.user.name %></span>
+          <span><%= time_ago_in_words(question.created_at) %> ago</span>
+        </div>
 
-      <p><%= truncate(question.body, length: 160) %></p>
-
-      <% if @permissions.delete_question?(question) %>
-        <%= button_to "Delete",
-                      question_path(question),
-                      method: :delete,
-                      form: { data: { turbo_confirm: "Delete this question?" } } %>
-      <% end %>
-    </article>
+        <div class="question-card__actions">
+          <% if @permissions.delete_question?(question) %>
+            <%= button_to "Delete",
+                          question_path(question),
+                          method: :delete,
+                          class: "btn btn--danger",
+                          form: { data: { turbo_confirm: "Delete this question?" } } %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="empty-state">No questions yet.</p>
   <% end %>
-<% else %>
-  <p>No questions yet.</p>
-<% end %>
+</div>
