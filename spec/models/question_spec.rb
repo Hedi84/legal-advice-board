@@ -8,6 +8,7 @@ RSpec.describe Question, type: :model do
     it { is_expected.to validate_presence_of(:body) }
     it { is_expected.to validate_presence_of(:category) }
     it { is_expected.to belong_to(:user) }
+    it { is_expected.to have_many(:answers).dependent(:destroy) }
   end
 
   describe "status" do
@@ -31,6 +32,12 @@ RSpec.describe Question, type: :model do
       user = create(:user)
       create(:question, user: user)
       expect { user.destroy }.to change(Question, :count).by(-1)
+    end
+
+    it "destroys its answers when destroyed" do
+      question = create(:question)
+      create(:answer, question: question)
+      expect { question.destroy }.to change(Answer, :count).by(-1)
     end
   end
 end

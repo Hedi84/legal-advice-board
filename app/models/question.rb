@@ -9,6 +9,7 @@ class Question < ApplicationRecord
   ].freeze
 
   belongs_to :user
+  has_many :answers, dependent: :destroy
 
   enum :status, { open: 0, answered: 1, closed: 2 }
 
