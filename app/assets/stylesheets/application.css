@@ -9,6 +9,35 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  background: #1e293b;
+  color: white;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar button {
+  background: none;
+  border: 1px solid white;
+  color: white;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.navbar button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 .flash {
   display: flex;
   justify-content: space-between;

@@ -24,6 +24,12 @@
   </head>
 
   <body>
+    <nav class="navbar">
+      <%= link_to "Home", root_path %>
+      <% if logged_in? %>
+        <%= button_to "Logout", logout_path, method: :delete %>
+      <% end %>
+    </nav>
     <%= render "shared/flash" %>
     <%= yield %>
   </body>
