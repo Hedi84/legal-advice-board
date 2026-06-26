@@ -1,0 +1,34 @@
+<h1>Questions</h1>
+
+<% if @permissions.create_questions? %>
+  <%= link_to "Ask a question", new_question_path %>
+<% end %>
+
+<% if @questions.any? %>
+  <% @questions.each do |question| %>
+    <article>
+      <h2><%= question.title %></h2>
+
+      <p>
+        <strong>Category:</strong>
+        <%= question.category %>
+      </p>
+
+      <p>
+        <strong>Status:</strong>
+        <%= question.status.humanize %>
+      </p>
+
+      <p><%= truncate(question.body, length: 160) %></p>
+
+      <% if @permissions.delete_question?(question) %>
+        <%= button_to "Delete",
+                      question_path(question),
+                      method: :delete,
+                      form: { data: { turbo_confirm: "Delete this question?" } } %>
+      <% end %>
+    </article>
+  <% end %>
+<% else %>
+  <p>No questions yet.</p>
+<% end %>

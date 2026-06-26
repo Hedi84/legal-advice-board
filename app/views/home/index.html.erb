@@ -3,6 +3,12 @@
 
   <p>Welcome, <%= current_user.name %>.</p>
 
+  <%= link_to "View Questions", questions_path %>
+
+  <% if @permissions.create_questions? %>
+    <%= link_to "Ask a Question", new_question_path %>
+  <% end %>
+
   <%= button_to "Logout", logout_path, method: :delete %>
 
 <% else %>
