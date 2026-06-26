@@ -7,6 +7,8 @@ class User < ApplicationRecord
     admin: 2
   }
 
+  has_many :questions, dependent: :destroy
+
   normalizes :email_address, with: ->(email_address) { email_address.strip.downcase }
 
   validates :name, presence: true
