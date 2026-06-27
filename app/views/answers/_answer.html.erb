@@ -18,11 +18,11 @@
       <% if @permissions.pay_for_answer?(answer) %>
         <%= form_with url: payment_path(answer.payment),
                       method: :patch,
-                      data: { controller: "payment", action: "submit->payment#pay" } do |form| %>
+                      data: { controller: "payment" } do |form| %>
           <%= form.button "Pay £#{answer.fee_pounds}",
                           type: "submit",
                           class: "btn btn--primary",
-                          data: { payment_target: "button" } %>
+                          data: { payment_target: "button", action: "click->payment#pay" } %>
         <% end %>
       <% end %>
     </div>

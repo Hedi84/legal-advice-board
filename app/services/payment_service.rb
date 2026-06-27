@@ -5,7 +5,7 @@ class PaymentService
 
   def pay!
     ActiveRecord::Base.transaction do
-      @payment.update!(status: :paid)
+      @payment.update!(status: :paid, approved_at: Time.current)
       @payment.answer.question.update!(status: :answered)
     end
   end

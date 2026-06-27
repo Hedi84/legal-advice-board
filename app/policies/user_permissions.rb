@@ -20,7 +20,8 @@ class UserPermissions
   end
 
   def pay_for_answer?(answer)
-    answer.question.user == user &&
+    user.user? &&
+      answer.question.user == user &&
       answer.payment.present? &&
       !answer.payment.paid?
   end

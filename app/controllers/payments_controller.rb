@@ -15,7 +15,7 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
-          dom_id(@answer),
+          "answer_#{@answer.id}",
           partial: "answers/answer",
           locals: { answer: @answer }
         )

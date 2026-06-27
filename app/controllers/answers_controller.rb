@@ -11,6 +11,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.lawyer = current_user
 
+    # use a transaction here to make sure one never exists without the other
     if @answer.valid?
       ActiveRecord::Base.transaction do
         @answer.save!

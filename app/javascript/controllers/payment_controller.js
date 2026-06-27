@@ -10,6 +10,6 @@ export default class extends Controller {
 
     setTimeout(() => {
       this.element.requestSubmit()
-    }, 5000)
+    }, 3000)
   }
 }
