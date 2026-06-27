@@ -142,6 +142,10 @@ body {
 
 .btn--full { width: 100%; text-align: center; margin-top: 0.5rem; }
 
+/* ── Home Actions ────────────────────────────────── */
+
+.home-actions { display: flex; flex-direction: column; gap: 0.75rem; }
+
 /* ── Buttons ─────────────────────────────────────── */
 
 .btn {

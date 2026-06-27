@@ -1,30 +1,26 @@
 <% if logged_in? %>
-  <h1>Legal Advice Board</h1>
-
-  <p>Welcome, <%= current_user.name %>.</p>
-
-  <%= link_to "View Questions", questions_path %>
-
-  <% if @permissions.create_questions? %>
-    <%= link_to "Ask a Question", new_question_path %>
-  <% end %>
-
+  <div class="form-card form-card--page">
+    <h1 class="form-card__title">Welcome, <%= current_user.name %></h1>
+    <div class="home-actions">
+      <%= link_to "View Questions", questions_path, class: "btn btn--primary btn--full" %>
+      <% if @permissions.create_questions? %>
+        <%= link_to "Ask a Question", new_question_path, class: "btn btn--secondary btn--full" %>
+      <% end %>
+    </div>
+  </div>
 <% else %>
-
-  <h1>Legal Advice Board</h1>
-
-  <%= form_with url: login_path do |form| %>
-    <div>
-      <%= form.label :email_address %>
-      <%= form.email_field :email_address %>
-    </div>
-
-    <div>
-      <%= form.label :password %>
-      <%= form.password_field :password %>
-    </div>
-
-    <%= form.submit "Sign in" %>
-  <% end %>
-
+  <div class="form-card form-card--page">
+    <h1 class="form-card__title">Sign in</h1>
+    <%= form_with url: login_path do |form| %>
+      <div class="form-group">
+        <%= form.label :email_address %>
+        <%= form.email_field :email_address, autofocus: true, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= form.label :password %>
+        <%= form.password_field :password, class: "form-control" %>
+      </div>
+      <%= form.submit "Sign in", class: "btn btn--primary btn--full" %>
+    <% end %>
+  </div>
 <% end %>
