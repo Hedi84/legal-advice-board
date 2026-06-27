@@ -5,4 +5,5 @@ class Answer < ApplicationRecord
 
   validates :response, presence: true
   validates :fee_pounds, numericality: { only_integer: true, greater_than: 0 }
+  validates :lawyer_id, uniqueness: { scope: :question_id, message: "has already answered this question" }
 end

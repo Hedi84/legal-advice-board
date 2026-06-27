@@ -11,6 +11,10 @@ class UserPermissions
     user.lawyer? || user.admin?
   end
 
+  def can_answer?(question)
+    create_answers? && !question.closed? && !question.answers.exists?(lawyer: user)
+  end
+
   def view_all_questions?
     user.lawyer? || user.admin?
   end

@@ -26,7 +26,7 @@
                       form: { data: { turbo_confirm: "Delete this question?" } } %>
       <% end %>
 
-      <% if @question.answered? && @permissions.close_question?(@question) %>
+      <% if !@question.closed? && @permissions.close_question?(@question) %>
         <%= button_to "Close question",
                       close_question_path(@question),
                       method: :patch,
@@ -39,7 +39,7 @@
   <div class="answers-section">
     <div class="answers-section__header">
       <h2><%= pluralize(@answers.count, "Answer") %></h2>
-      <% if @permissions.create_answers? %>
+      <% if @permissions.can_answer?(@question) %>
         <%= link_to "Add Answer", new_question_answer_path(@question), class: "btn btn--primary" %>
       <% end %>
     </div>

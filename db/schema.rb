@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_26_180446) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_27_094904) do
   create_table "answers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "fee_pounds"
@@ -18,8 +18,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_180446) do
     t.integer "question_id", null: false
     t.text "response"
     t.datetime "updated_at", null: false
-    t.index ["lawyer_id"], name: "index_answers_on_lawyer_id"
-    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index [ "lawyer_id" ], name: "index_answers_on_lawyer_id"
+    t.index [ "question_id", "lawyer_id" ], name: "index_answers_on_question_id_and_lawyer_id", unique: true
+    t.index [ "question_id" ], name: "index_answers_on_question_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -29,8 +30,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_180446) do
     t.integer "requester_id", null: false
     t.integer "status"
     t.datetime "updated_at", null: false
-    t.index ["answer_id"], name: "index_payments_on_answer_id"
-    t.index ["requester_id"], name: "index_payments_on_requester_id"
+    t.index [ "answer_id" ], name: "index_payments_on_answer_id"
+    t.index [ "requester_id" ], name: "index_payments_on_requester_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -41,9 +42,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_180446) do
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
-    t.index ["category"], name: "index_questions_on_category"
-    t.index ["status"], name: "index_questions_on_status"
-    t.index ["user_id"], name: "index_questions_on_user_id"
+    t.index [ "category" ], name: "index_questions_on_category"
+    t.index [ "status" ], name: "index_questions_on_status"
+    t.index [ "user_id" ], name: "index_questions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,7 +54,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_180446) do
     t.string "password_digest", null: false
     t.integer "role", default: 0, null: false
     t.datetime "updated_at", null: false
-    t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index [ "email_address" ], name: "index_users_on_email_address", unique: true
   end
 
   add_foreign_key "answers", "questions"

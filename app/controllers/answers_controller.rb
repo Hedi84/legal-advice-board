@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :require_user!
   before_action :require_answer_creator!
   before_action :set_question
+  before_action :require_question_open!
 
   def new
     @answer = @question.answers.new
@@ -44,5 +45,11 @@ class AnswersController < ApplicationController
     return if @permissions.create_answers?
 
     redirect_to questions_path, alert: "You are not authorised to answer questions."
+  end
+
+  def require_question_open!
+    return unless @question&.closed?
+
+    redirect_to question_path(@question), alert: "This question is closed and no longer accepting answers."
   end
 end
