@@ -38,7 +38,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:response, :fee_pounds)
+    params.require(:answer).permit(:response, :proposed_fee_pounds)
   end
 
   def require_answer_creator!

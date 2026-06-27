@@ -9,7 +9,7 @@ RSpec.describe Answer, type: :model do
     it { is_expected.to belong_to(:lawyer) }
     it { is_expected.to have_one(:payment).dependent(:destroy) }
 
-    it { is_expected.to validate_numericality_of(:fee_pounds).only_integer.is_greater_than(0) }
+    it { is_expected.to validate_numericality_of(:proposed_fee_pounds).is_greater_than(0) }
     it { is_expected.to validate_uniqueness_of(:lawyer_id).scoped_to(:question_id).with_message("has already answered this question") }
   end
 end

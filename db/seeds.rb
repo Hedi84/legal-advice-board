@@ -139,7 +139,7 @@ questions.each do |question|
     answer = question.answers.create!(
       lawyer: lawyer,
       response: answer_body,
-      fee_pounds: [ 35, 50, 75, 100, 125 ].sample
+      proposed_fee_pounds: [ 35.00, 49.95, 75.50, 100.00, 125.00 ].sample
     )
     answer.create_payment!(requester: question.user, status: :pending)
   end

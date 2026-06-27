@@ -4,6 +4,7 @@ class Answer < ApplicationRecord
   has_one :payment, dependent: :destroy
 
   validates :response, presence: true
-  validates :fee_pounds, numericality: { only_integer: true, greater_than: 0 }
+  validates :proposed_fee_pounds,
+          numericality: { greater_than: 0 }
   validates :lawyer_id, uniqueness: { scope: :question_id, message: "has already answered this question" }
 end
