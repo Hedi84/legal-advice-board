@@ -25,10 +25,15 @@
 
   <body>
     <nav class="navbar">
-      <%= link_to "Home", root_path %>
-      <% if logged_in? %>
-        <%= button_to "Logout", logout_path, method: :delete %>
-      <% end %>
+      <div class="navbar__left">
+        <%= link_to "Home", root_path %>
+      </div>
+      <div class="navbar__center">Legal Advice Q&amp;A Board</div>
+      <div class="navbar__right">
+        <% if logged_in? %>
+          <%= button_to "Logout", logout_path, method: :delete %>
+        <% end %>
+      </div>
     </nav>
     <%= render "shared/flash" %>
     <%= yield %>
