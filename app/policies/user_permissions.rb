@@ -30,6 +30,13 @@ class UserPermissions
       !answer.payment.paid?
   end
 
+  def rate_answer?(answer)
+    user.user? &&
+      answer.question.user == user &&
+      answer.payment&.paid? &&
+      answer.rating.nil?
+  end
+
   def close_question?(question)
     user.admin? || (user.user? && question.user == user)
   end

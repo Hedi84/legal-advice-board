@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   resources :payments, only: %i[update]
+  resources :ratings, only: %i[create]
 
   get "up" => "rails/health#show", as: :rails_health_check
 end
