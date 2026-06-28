@@ -77,7 +77,7 @@ richard = User.create!(
 User.create!(
   name: "Admin",
   email_address: "admin@example.com",
-  password: (admin_pw = SecureRandom.hex(8)),
+  password: 'password',
   role: :admin
 )
 
