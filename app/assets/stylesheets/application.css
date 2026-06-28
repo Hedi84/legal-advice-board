@@ -134,6 +134,10 @@ body {
   transition: border-color 0.15s;
 }
 
+.form-control--no-arrows::-webkit-outer-spin-button,
+.form-control--no-arrows::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.form-control--no-arrows { -moz-appearance: textfield; }
+
 .form-control:focus {
   outline: none;
   border-color: #1e293b;

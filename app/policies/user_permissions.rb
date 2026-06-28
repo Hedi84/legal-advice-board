@@ -20,7 +20,7 @@ class UserPermissions
   end
 
   def view_answer_full?(answer)
-    user.admin? || answer.payment&.paid?
+    user.admin? || answer.payment&.paid? || answer.lawyer == user
   end
 
   def pay_for_answer?(answer)

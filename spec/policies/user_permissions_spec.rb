@@ -9,6 +9,13 @@ RSpec.describe UserPermissions do
     it { expect(permissions.view_all_questions?).to be false }
     it { expect(permissions.delete_question?(build(:question, user: user))).to be true }
     it { expect(permissions.delete_question?(build(:question))).to be false }
+    it { expect(permissions.view_answer_full?(build(:answer))).to be false }
+
+    it "can view a paid answer" do
+      answer = create(:answer)
+      create(:payment, answer: answer, status: :paid)
+      expect(permissions.view_answer_full?(answer.reload)).to be true
+    end
   end
 
   context "when the user is a lawyer" do
@@ -17,6 +24,8 @@ RSpec.describe UserPermissions do
     it { expect(permissions.create_questions?).to be false }
     it { expect(permissions.view_all_questions?).to be true }
     it { expect(permissions.delete_question?(build(:question))).to be false }
+    it { expect(permissions.view_answer_full?(build(:answer))).to be false }
+    it { expect(permissions.view_answer_full?(build(:answer, lawyer: user))).to be true }
   end
 
   context "when the user is an admin" do
@@ -26,5 +35,6 @@ RSpec.describe UserPermissions do
     it { expect(permissions.view_all_questions?).to be true }
     it { expect(permissions.delete_question?(build(:question, user: user))).to be true }
     it { expect(permissions.delete_question?(build(:question))).to be true }
+    it { expect(permissions.view_answer_full?(build(:answer))).to be true }
   end
 end

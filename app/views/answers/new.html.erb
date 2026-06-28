@@ -31,7 +31,7 @@
 
       <div class="form-group">
         <%= form.label :proposed_fee_pounds, "Proposed fee (£)" %>
-        <%= form.number_field :proposed_fee_pounds, min: 1, class: "form-control" %>
+        <%= form.number_field :proposed_fee_pounds, min: 0.01, step: 0.01, class: "form-control form-control--no-arrows" %>
       </div>
 
       <%= form.submit "Submit Answer", class: "btn btn--primary" %>

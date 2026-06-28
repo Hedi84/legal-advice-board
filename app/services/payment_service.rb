@@ -6,7 +6,10 @@ class PaymentService
   def pay!
     ActiveRecord::Base.transaction do
       @payment.update!(status: :paid, approved_at: Time.current)
-      @payment.answer.question.update!(status: :answered)
+      # a question's status is only changed to 'answered' after
+      # the user pays for at least one answer
+      question = @payment.answer.question
+      question.update!(status: :answered) unless question.answered?
     end
   end
 end
