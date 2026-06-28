@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_27_111949) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_28_185225) do
   create_table "answers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "lawyer_id", null: false
@@ -47,6 +47,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_27_111949) do
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
+  create_table "ratings", force: :cascade do |t|
+    t.integer "answer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "rated_at", null: false
+    t.integer "rating", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["answer_id", "user_id"], name: "index_ratings_on_answer_id_and_user_id", unique: true
+    t.index ["answer_id"], name: "index_ratings_on_answer_id"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email_address", null: false
@@ -62,4 +74,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_27_111949) do
   add_foreign_key "payments", "answers"
   add_foreign_key "payments", "users", column: "requester_id"
   add_foreign_key "questions", "users"
+  add_foreign_key "ratings", "answers"
+  add_foreign_key "ratings", "users"
 end

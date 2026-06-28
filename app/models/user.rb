@@ -9,7 +9,16 @@ class User < ApplicationRecord
 
   has_many :questions, dependent: :destroy
   has_many :answers, foreign_key: :lawyer_id, dependent: :destroy
+  has_many :ratings, through: :answers
   has_many :payments, foreign_key: :requester_id, dependent: :destroy
+
+  def average_rating
+    ratings.average(:rating)&.round(1)
+  end
+
+  def ratings_count
+    ratings.count
+  end
 
   normalizes :email_address, with: ->(email_address) { email_address.strip.downcase }
 
