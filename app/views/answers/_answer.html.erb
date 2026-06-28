@@ -18,7 +18,8 @@
       <% if @permissions.pay_for_answer?(answer) %>
         <%= form_with url: payment_path(answer.payment),
                       method: :patch,
-                      data: { controller: "payment" } do |form| %>
+                      data: { controller: "payment",
+                              payment_delay_value: Rails.env.test? ? 0 : 3000 } do |form| %>
           <%= form.button "Pay £#{answer.proposed_fee_pounds}",
                           type: "submit",
                           class: "btn btn--primary",
