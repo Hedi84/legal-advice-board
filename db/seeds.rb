@@ -161,6 +161,20 @@ marcus_question.answers.find_by(lawyer: james).payment.update!(
 )
 marcus_question.update!(status: :closed)
 
+# ── Ratings for paid answers ──────────────────────────────────────────────────
+
+alice_question.answers.find_by(lawyer: claire).create_rating!(
+  user: alice,
+  rating: rand(1..5),
+  rated_at: 1.day.ago
+)
+
+marcus_question.answers.find_by(lawyer: james).create_rating!(
+  user: marcus,
+  rating: rand(1..5),
+  rated_at: 4.days.ago
+)
+
 # ── Generated passwords ───────────────────────────────────────────────────────
 
 puts "\nSeed complete. Generated passwords:"
@@ -172,4 +186,3 @@ puts "  claire@example.com  → #{claire_pw}"
 puts "  james@example.com   → #{james_pw}"
 puts "  fatima@example.com  → #{fatima_pw}"
 puts "  richard@example.com → #{richard_pw}"
-puts "  admin@example.com   → #{admin_pw}"
