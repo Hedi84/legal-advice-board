@@ -28,7 +28,7 @@ RSpec.describe "User question flow", type: :feature do
     let!(:answer)   { create(:answer, question: question, lawyer: lawyer) }
     let!(:payment)  { create(:payment, answer: answer, requester: user) }
 
-    it "pays for the answer and sees it unlocked with the question answered" do
+    it "pays for the answer, rates it, and sees the count update" do
       visit question_path(question)
       expect(page).to have_content("This answer is locked.")
 
@@ -36,6 +36,12 @@ RSpec.describe "User question flow", type: :feature do
 
       expect(page).to have_content(answer.response)
       expect(page).to have_css(".answer-card__paid", text: "Paid ✓")
+      expect(page).to have_content("Rate this answer:")
+
+      within(".star-picker") { find("[data-value='3']").click }
+      click_button "Submit rating"
+
+      expect(page).to have_css(".rating-count", text: "(1)")
 
       visit question_path(question)
       expect(page).to have_css(".status-badge--answered", text: "ANSWERED")
