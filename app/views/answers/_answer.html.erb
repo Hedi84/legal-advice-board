@@ -1,6 +1,15 @@
 <div class="answer-card" id="<%= dom_id(answer) %>">
   <div class="answer-card__header">
-    <span class="answer-card__lawyer"><%= answer.lawyer.name %></span>
+    <div>
+      <span class="answer-card__lawyer"><%= answer.lawyer.name %></span>
+      <div class="answer-card__rating">
+        <% filled = answer.lawyer.average_rating&.round || 0 %>
+        <% 5.times do |i| %>
+          <span class="star <%= 'star--filled' if i < filled %>">★</span>
+        <% end %>
+        <span class="rating-count">(<%= answer.lawyer.ratings_count %>)</span>
+      </div>
+    </div>
     <% if answer.payment&.paid? %>
       <span class="answer-card__paid">Paid ✓</span>
     <% else %>
@@ -10,6 +19,25 @@
 
   <% if @permissions.view_answer_full?(answer) %>
     <p class="answer-card__body"><%= answer.response %></p>
+
+    <% if @permissions.rate_answer?(answer) %>
+      <div class="answer-card__rate">
+        <%= form_with url: ratings_path, data: { controller: "rating" } do |form| %>
+          <%= form.hidden_field :answer_id, value: answer.id %>
+          <%= form.hidden_field :rating, value: "", data: { rating_target: "input" } %>
+          <p class="answer-card__rate-label">Rate this answer:</p>
+          <div class="star-picker">
+            <% 5.times do |i| %>
+              <span class="star-picker__star"
+                    data-rating-target="star"
+                    data-value="<%= i + 1 %>"
+                    data-action="mouseover->rating#highlight mouseout->rating#reset click->rating#select">☆</span>
+            <% end %>
+          </div>
+          <%= form.submit "Submit rating", class: "btn btn--secondary" %>
+        <% end %>
+      </div>
+    <% end %>
   <% else %>
     <div class="answer-card__locked">
       <p class="answer-card__locked-text">This answer is locked.</p>

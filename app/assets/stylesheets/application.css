@@ -359,6 +359,53 @@ body {
   margin: 0 0 0.75rem;
 }
 
+/* ── Stars ───────────────────────────────────────── */
+
+.star { color: #e2e8f0; font-size: 0.9rem; }
+.star--filled { color: #f59e0b; }
+
+.rating-count {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-left: 0.1rem;
+}
+
+.answer-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.05rem;
+  margin-top: 0.15rem;
+}
+
+.answer-card__rate {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.answer-card__rate-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+  margin: 0 0 0.5rem;
+}
+
+.star-picker {
+  display: flex;
+  gap: 0.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.star-picker__star {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #e2e8f0;
+  transition: color 0.1s;
+  user-select: none;
+}
+
+.star-picker__star--filled { color: #f59e0b; }
+
 /* ── Empty State ─────────────────────────────────── */
 
 .empty-state {
