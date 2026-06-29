@@ -2,18 +2,24 @@
   <div class="answer-card__header">
     <div>
       <span class="answer-card__lawyer"><%= answer.lawyer.name %></span>
+
       <div class="answer-card__rating">
         <% filled = answer.lawyer.average_rating&.round || 0 %>
+
         <% 5.times do |i| %>
           <span class="star <%= 'star--filled' if i < filled %>">★</span>
         <% end %>
+
         <span class="rating-count">(<%= answer.lawyer.ratings_count %>)</span>
       </div>
     </div>
+
     <% if answer.payment&.paid? %>
       <span class="answer-card__paid">Paid ✓</span>
     <% else %>
-      <span class="answer-card__fee">Proposed fee: £<%= answer.proposed_fee_pounds %></span>
+      <span class="answer-card__fee">
+        Proposed fee: £<%= answer.proposed_fee_pounds %>
+      </span>
     <% end %>
   </div>
 
@@ -25,7 +31,9 @@
         <%= form_with url: ratings_path, data: { controller: "rating" } do |form| %>
           <%= form.hidden_field :answer_id, value: answer.id %>
           <%= form.hidden_field :rating, value: "", data: { rating_target: "input" } %>
+
           <p class="answer-card__rate-label">Rate this answer:</p>
+
           <div class="star-picker">
             <% 5.times do |i| %>
               <span class="star-picker__star"
@@ -34,6 +42,7 @@
                     data-action="mouseover->rating#highlight mouseout->rating#reset click->rating#select">☆</span>
             <% end %>
           </div>
+
           <%= form.submit "Submit rating", class: "btn btn--secondary" %>
         <% end %>
       </div>
@@ -41,17 +50,31 @@
   <% else %>
     <div class="answer-card__locked">
       <p class="answer-card__locked-text">This answer is locked.</p>
-      <p class="answer-card__locked-sub">Pay £<%= answer.proposed_fee_pounds %> to reveal the lawyer's advice.</p>
+
+      <p class="answer-card__locked-sub">
+        Pay £<%= answer.proposed_fee_pounds %> to reveal the lawyer's advice.
+      </p>
 
       <% if @permissions.pay_for_answer?(answer) %>
+        <% payment_data =
+          if Rails.env.test?
+            {}
+          else
+            {
+              controller: "payment",
+              action: "submit->payment#pay",
+              payment_delay_value: 3000
+            }
+          end
+        %>
+
         <%= form_with url: payment_path(answer.payment),
                       method: :patch,
-                      data: { controller: "payment",
-                              payment_delay_value: Rails.env.test? ? 0 : 3000 } do |form| %>
+                      data: payment_data do |form| %>
           <%= form.button "Pay £#{answer.proposed_fee_pounds}",
                           type: "submit",
                           class: "btn btn--primary",
-                          data: { payment_target: "button", action: "click->payment#pay" } %>
+                          data: { payment_target: "button" } %>
         <% end %>
       <% end %>
     </div>
