@@ -1,3 +1,11 @@
+# ── Cleanup ───────────────────────────────────────────────────────────────────
+
+Rating.destroy_all
+Payment.destroy_all
+Answer.destroy_all
+Question.destroy_all
+User.destroy_all
+
 # ── Users ────────────────────────────────────────────────────────────────────
 
 test_user = User.create!(

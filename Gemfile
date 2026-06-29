@@ -78,3 +78,5 @@ gem "faker", "~> 3.8", groups: [ :development, :test ]
 gem "shoulda-matchers", "~> 8.0", group: :test
 
 gem "bcrypt", "~> 3.1"
+
+gem "pg", "~> 1.6"
