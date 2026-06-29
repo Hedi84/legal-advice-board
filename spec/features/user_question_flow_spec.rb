@@ -34,6 +34,9 @@ RSpec.describe "User question flow", type: :feature do
 
       click_button "Pay £#{answer.proposed_fee_pounds}"
 
+      expect(page).to have_content("Paid ✓")
+      expect(page).to have_content(answer.response)
+      expect(payment.reload.status).to eq("paid")
       expect(page).to have_css(".answer-card__paid", text: "Paid ✓")
       expect(page).to have_content(answer.response)
       expect(page).to have_content("Rate this answer:")
