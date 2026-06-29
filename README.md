@@ -34,8 +34,6 @@ Run the test suite:
 bundle exec rspec
 ```
 
-The feature specs use Selenium with headless Chrome — Chrome must be installed on your machine.
-
 ## Design Decisions
 
 Rather than implementing every possible feature, I focused on building a complete application with a maintainable architecture, good automated test coverage and a polished user experience.
@@ -94,7 +92,7 @@ The application includes:
 - Request specs
 - Policy specs
 - Service specs
-- An end-to-end feature spec using Capybara and Selenium
+- An end-to-end feature spec
 
 The feature spec demonstrates the application's primary user journey of submitting a question, purchasing legal advice, revealing the answer and rating it.
 
@@ -171,7 +169,5 @@ If I were to revisit the codebase, I would prioritise expanding end-to-end featu
 - Stimulus
 - SQLite
 - RSpec
-- Capybara
-- Selenium
 - FactoryBot
 - RuboCop
