@@ -19,6 +19,8 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user!
-    redirect_to login_path, alert: "You must be signed in to do that." unless logged_in?
+    return if logged_in?
+    alert = "You must be signed in to do that." unless request.path == root_path
+    redirect_to login_path, alert: alert
   end
 end
