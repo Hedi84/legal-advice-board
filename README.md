@@ -6,7 +6,7 @@ Legal Advice Board is a Ruby on Rails 8 application that allows users to ask leg
 
 The application is available at:
 
-`<https://legal-advice-board.onrender.com/>`
+[https://legal-advice-board.onrender.com](https://legal-advice-board.onrender.com/)
 
 ## Demo Accounts
 
