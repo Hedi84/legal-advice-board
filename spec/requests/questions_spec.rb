@@ -51,7 +51,7 @@ RSpec.describe "Questions", type: :request do
 
     it "re-renders the form with 422 on invalid params" do
       post questions_path, params: { question: attributes_for(:question, title: "") }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it "can delete their own question" do

@@ -23,7 +23,7 @@ RSpec.describe "Sessions", type: :request do
       it "does not set the session and re-renders the form" do
         post login_path, params: { email_address: user.email_address, password: "wrongpassword" }
         expect(session[:user_id]).to be_nil
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe "Sessions", type: :request do
       it "does not set the session and re-renders the form" do
         post login_path, params: { email_address: "nobody@example.com", password: "password123" }
         expect(session[:user_id]).to be_nil
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end

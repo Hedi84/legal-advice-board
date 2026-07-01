@@ -49,7 +49,7 @@ RSpec.describe "Answers", type: :request do
     it "cannot submit a second answer to the same question" do
       create(:answer, question: question, lawyer: user)
       expect { post question_answers_path(question), params: valid_params }.not_to change(Answer, :count)
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it "cannot submit an answer to a closed question" do
@@ -60,7 +60,7 @@ RSpec.describe "Answers", type: :request do
 
     it "re-renders the form with 422 on invalid params" do
       post question_answers_path(question), params: { answer: attributes_for(:answer, response: "") }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 

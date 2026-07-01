@@ -24,11 +24,8 @@ class AnswersController < ApplicationController
 
       redirect_to questions_path, notice: "Answer submitted. Payment request created."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
-  rescue ActiveRecord::RecordInvalid
-    flash.now[:alert] = "Something went wrong while submitting the answer."
-    render :new, status: :unprocessable_entity
   end
 
   private

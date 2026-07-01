@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to questions_path, notice: "Question submitted successfully."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

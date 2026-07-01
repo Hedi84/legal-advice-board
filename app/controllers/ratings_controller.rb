@@ -3,19 +3,19 @@ class RatingsController < ApplicationController
   before_action :set_answer
   before_action :require_rating_permission!
 
-def create
-  @rating = @answer.build_rating(rating_params)
-  @rating.user = current_user
-  @rating.rated_at = Time.current
+  def create
+    @rating = @answer.build_rating(rating_params)
+    @rating.user = current_user
+    @rating.rated_at = Time.current
 
-  if @rating.save
-    @answer.reload
-    respond_to_rating_success
-  else
-    redirect_to question_path(@answer.question),
-                alert: @rating.errors.full_messages.to_sentence
+    if @rating.save
+      @answer.reload
+      respond_to_rating_success
+    else
+      redirect_to question_path(@answer.question),
+                  alert: @rating.errors.full_messages.to_sentence
+    end
   end
-end
 
   private
 
