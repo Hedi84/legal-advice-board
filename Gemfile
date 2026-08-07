@@ -63,7 +63,7 @@ end
 
 gem "rspec-rails", "~> 8.0", groups: [ :development, :test ]
 
-gem "rubocop", "~> 1.88", group: :development
+gem "rubocop", "~> 1.89", group: :development
 
 gem "pry-rails", "~> 0.3.11", groups: [ :development, :test ]
 
